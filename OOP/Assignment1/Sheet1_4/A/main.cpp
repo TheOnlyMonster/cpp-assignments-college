@@ -20,5 +20,5 @@ void binaryPrint(int n){
     }
 }
 int main(){
-    binaryPrint(0);
+    binaryPrint(2);
 }
