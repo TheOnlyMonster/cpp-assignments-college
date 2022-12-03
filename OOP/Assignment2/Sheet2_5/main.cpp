@@ -47,11 +47,11 @@ void Universe::display(){
         {
             cout<<game[i][j];
             temp_game[i][j]=game[i][j];
-            cout.clear();
         }
         cout<<endl;
     }
-    cout<<"-------------------------------------------------------------------------"<<endl;
+    system("pause");
+    system("cls");
     Universe::next_generation();
 }
 int Universe::count_neighbors(int row,int col){
