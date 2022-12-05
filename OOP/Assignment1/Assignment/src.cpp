@@ -1,8 +1,12 @@
 #include "header.h"
+char BigDecimalInt::Sign(){
+    return this->sign;
+}
 int BigDecimalInt::size(){
     return this->decStr.length();
 }
 bool BigDecimalInt::operator<(BigDecimalInt anotherDec){
+    bool same=false;
     if(this->sign=='-'&&anotherDec.sign=='+'){
         return true;
     }
@@ -46,10 +50,18 @@ bool BigDecimalInt::operator<(BigDecimalInt anotherDec){
             return true;
             break;
         }
+        else{
+            same=true;
+        }
+        
+    }
+    if(same){
+        return false;
     }
     return true;
 } 
 bool BigDecimalInt::operator>(BigDecimalInt anotherDec){
+    bool same=false;
     if(this->sign=='-'&&anotherDec.sign=='+'){
         return false;
     }
@@ -93,6 +105,12 @@ bool BigDecimalInt::operator>(BigDecimalInt anotherDec){
             return false;
             break;
         }
+        else{
+            same=true;
+        }
+    }
+    if(same){
+        return false;
     }
     return true;
 } 
@@ -178,61 +196,42 @@ ostream& operator <<(ostream& out, BigDecimalInt b){
 }
 BigDecimalInt BigDecimalInt::subtract(BigDecimalInt num2, BigDecimalInt num1){
     string res,l,s;
-    BigDecimalInt sM_Size(0),sL_Size(0);
-    int bSize,mSize;
     int x;
-    if(num2.size() > num1.size()){
-        sL_Size=num2;
-        sM_Size=num1;
-        bSize=num2.decStr.length();
-        mSize=num1.decStr.length();
-        // if(num2.sign=='-' && num1.sign=='+'){
-        //     res+='-';
-        // }
-    }
-    else if(num2.size() < num1.size()){
-        sL_Size=num1;
-        sM_Size=num2;
-        bSize=num1.decStr.length();
-        mSize=num2.decStr.length();
-        if(num1.sign=='+'&&num2.sign=='+'){
+    if(num2.size() < num1.size()){
+        BigDecimalInt temp(0);
+        temp=num2;
+        num2=num1;
+        num1=temp;
+        if(num2.sign=='+'&&num1.sign=='+'){
             res+='-';
         }
     }
-    else{
-        sL_Size=num2;
-        sM_Size=num1;
-        bSize=num2.size();
-        mSize=num1.size();
+    s=getNumWithAddedZeros(num2.size(),num1.size())+num1.decStr;
+    l=num2.decStr;
+    if((int)l[0]-48 < (int)s[0]-48){
+        if(num1.sign=='-'&&num2.sign=='+'){
+            res+='-';
+            string t;
+            t=l;
+            l=s;
+            s=t;
+        }
     }
-    s=getNumWithAddedZeros(bSize,mSize)+sM_Size.decStr;
-    sM_Size.decStr=s;
-    l=sL_Size.decStr;
-    if(((int)sL_Size.decStr[0]-48 < (int)sM_Size.decStr[0]-48) && sL_Size.sign=='+' && sM_Size.sign=='+'){
-        res+='-';
-        string t;
-        t=l;
-        l=s;
-        s=t;
+    if((int)l[0]-48 > (int)s[0]-48){
+        
+        if(num2.sign=='-'&&num1.sign=='+'){
+            res+='-';
+        }
     }
-    else if(((int)sL_Size.decStr[0]-48 > (int)sM_Size.decStr[0]-48) && sL_Size.sign=='-' && sM_Size.sign=='+'){
-        res+='-';
-    }
-    else if(((int)sL_Size.decStr[0]-48 < (int)sM_Size.decStr[0]-48) && sL_Size.sign=='-' && sM_Size.sign=='+'){
-        string t;
-        t=l;
-        l=s;
-        s=t;
-    }
-    else if((int)sL_Size.decStr[0]-48 == (int)sM_Size.decStr[0]-48){
+    else if((int)num2.decStr[0]-48 == (int)num1.decStr[0]-48){
         for (int i = 0; i < l.length(); i++)
         {
-            if( sL_Size.sign=='-' && sM_Size.sign=='+' ){
-                if((int)sL_Size.decStr[i]-48>(int)sM_Size.decStr[i]-48){
+            if( num2.sign=='-' && num1.sign=='+' ){
+                if((int)num2.decStr[i]-48>(int)num1.decStr[i]-48){
                     res+='-';
                     break;
                 }
-                else if((int)sL_Size.decStr[i]-48<(int)sM_Size.decStr[i]-48){
+                else if((int)num2.decStr[i]-48<(int)num1.decStr[i]-48){
                     string t;
                     t=l;
                     l=s;
@@ -240,11 +239,11 @@ BigDecimalInt BigDecimalInt::subtract(BigDecimalInt num2, BigDecimalInt num1){
                     break;
                 }
             }
-            else if( sL_Size.sign=='+' && sM_Size.sign=='-' ){
-                if((int)sL_Size.decStr[i]-48>(int)sM_Size.decStr[i]-48){
+            else if( num2.sign=='+' && num1.sign=='-' ){
+                if((int)num2.decStr[i]-48>(int)num1.decStr[i]-48){
                     break;
                 }
-                else if((int)sL_Size.decStr[i]-48<(int)sM_Size.decStr[i]-48){
+                else if((int)num2.decStr[i]-48<(int)num1.decStr[i]-48){
                     res+='-';
                     string t;
                     t=l;
@@ -253,8 +252,8 @@ BigDecimalInt BigDecimalInt::subtract(BigDecimalInt num2, BigDecimalInt num1){
                     break;
                 }
             }
-            else if(sL_Size.sign=='+' && sM_Size.sign=='+'){
-                if((int)sL_Size.decStr[i]-48<(int)sM_Size.decStr[i]-48){
+            else if(num2.sign=='+' && num1.sign=='+'){
+                if((int)num2.decStr[i]-48<(int)num1.decStr[i]-48){
                     res+='-';
                     string t;
                     t=l;
@@ -265,7 +264,7 @@ BigDecimalInt BigDecimalInt::subtract(BigDecimalInt num2, BigDecimalInt num1){
             }
         }
     }
-    for (int i = bSize-1; i >= 0 ; i--)
+    for (int i = num2.size()-1; i >= 0 ; i--)
     {
         int rem=0;
         int temp=0;
@@ -287,34 +286,21 @@ BigDecimalInt BigDecimalInt::subtract(BigDecimalInt num2, BigDecimalInt num1){
     return BigDecimalIntRes;
 }
 BigDecimalInt BigDecimalInt::sum(BigDecimalInt num2,BigDecimalInt num1){
-    string res,l,s,sM_Size,sL_Size;
-    int bSize,mSize;
+    string res,l,s;
     if(num2.sign=='-'&&num1.sign=='-'){
         res+='-';
     }
-    if(num2.size() > num1.size()){
-        bSize=num2.size();
-        mSize=num1.size();
-        sM_Size=num1.decStr;
-        sL_Size=num2.decStr;
+    if(num2.size() < num1.size()){
+        BigDecimalInt temp(0);
+        temp=num2;
+        num2=num1;
+        num1=temp;
     }
-    else if(num2.size() < num1.size()){
-        bSize=num1.size();
-        mSize=num2.size();
-        sM_Size=num2.decStr;
-        sL_Size=num1.decStr;
-    }
-    else{
-        bSize=num2.size();
-        mSize=num1.size();
-        sM_Size=num2.decStr;
-        sL_Size=num1.decStr;
-    }
-    s=getNumWithAddedZeros(bSize,mSize)+sM_Size;
-    l=sL_Size;
-    for (int i = bSize-1; i >= 0 ; i--)
+    s=getNumWithAddedZeros(num2.size(),num1.size())+num1.decStr;
+    l=num2.decStr;
+    int rem=0;
+    for (int i = num2.size()-1; i >= 0 ; i--)
     {
-        static int rem=0;
         int temp=0;
         temp=(int)s[i]-48 + rem + (int)l[i]-48;
         rem=0;
@@ -334,6 +320,7 @@ BigDecimalInt BigDecimalInt::sum(BigDecimalInt num2,BigDecimalInt num1){
     if(res[0]=='-'){
         reverse(res.begin()+1,res.end());
     }
+    
     else{
         reverse(res.begin(),res.end());
     }

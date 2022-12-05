@@ -1,48 +1,61 @@
 #include <bits/stdc++.h>
 using namespace std;
 class MyClass{
+    int len;
     char* ptr;
     public:
         MyClass(MyClass &&other){
             cout<<"Entered Move constructor"<<endl;
+            ptr=new char[other.len];
             ptr=other.ptr;
+            len=other.len;
             other.ptr=nullptr;
-            cout<<&ptr<<endl;
-            cout<<&other.ptr<<endl;
+            other.len=0;
         }
-        MyClass(const char *x){
-            ptr=new char[5];
+        MyClass(const char *x,int len){
+            cout<<"Entered Parametrized constructor"<<endl;
+            this->len=len;
+            ptr=new char[len];
             strcpy(ptr,x);
         }
-        MyClass(const MyClass &other):MyClass(other.ptr){
+        MyClass(const MyClass &other):MyClass(other.ptr,other.len){
             cout<<"Deep Copy Constructor Called"<<endl;
         }
         void getPtrAddress(){
             cout<<&ptr<<endl;
         }
         void getPtrValue(){
-            cout<<ptr<<endl;
+            cout<<ptr<<" "<<len<<endl;
         }
-        void ChangePtrValue(const char* m){
-            strcpy(ptr,m);
+        void ChangePtrValue(const char *x,int len){
+            this->len=len;
+            ptr=new char[len];
+            strcpy(ptr,x);
+        }
+        ~MyClass(){
+            cout<<"Destructor"<<endl;
+            if(this->ptr==nullptr){
+                cout<<"nullptr Destroyed"<<endl;
+            }
+            else{
+                cout<<"non nullptr Destroyed"<<endl;
+            }
         }
 };
 int main(){
-    char m[]="ahmed";
-    MyClass obj1(m);
-    MyClass obj2(obj1);
-    obj1.getPtrAddress();
-    obj2.getPtrAddress();
-    obj1.getPtrValue();
-    obj2.getPtrValue();
-    obj1.ChangePtrValue("ali");
-    obj2.ChangePtrValue("abdo");
-    obj1.getPtrAddress();
-    obj2.getPtrAddress();
-    obj1.getPtrValue();
-    obj2.getPtrValue();
-    cout<<"========================="<<endl;
-    MyClass obj4(move(obj1));
-    // vector<MyClass> vec;
-    // vec.push_back(MyClass{"10"});
+    // obj1.getPtrAddress();
+    // obj2.getPtrAddress();
+    // obj1.getPtrValue();
+    // obj2.getPtrValue();
+    // obj1.ChangePtrValue("ali",3);
+    // obj2.ChangePtrValue("abdo",4);
+    // obj1.getPtrAddress();
+    // obj2.getPtrAddress();
+    // obj1.getPtrValue();
+    // obj2.getPtrValue();
+    // cout<<"========================="<<endl;
+    // MyClass obj4 = MyClass("ooo",3);
+    // MyClass obj4(MyClass("oooo",4));
+    // obj4.getPtrAddress();
+    // obj4.getPtrValue();
 }

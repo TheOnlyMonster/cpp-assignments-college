@@ -12,6 +12,7 @@ class BigDecimalInt{
         BigDecimalInt sum(BigDecimalInt num2,BigDecimalInt num1);
         string getNumWithAddedZeros(int b,int m);
     public:
+        char Sign();
         int size();
         BigDecimalInt(int decInt);
         BigDecimalInt(string decStr);
