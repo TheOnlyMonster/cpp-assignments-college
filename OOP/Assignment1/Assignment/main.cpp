@@ -113,16 +113,16 @@ int main(){
     cout << test10.size() << "\n";
     string s1,s2;
     
-    // while(cin>>s1>>s2){
-    //     BigDecimalInt a(s1),b(s2);
-    //     cout<<a+b<<endl;
-    //     cout<<a-b<<endl;
-    //     cout<<b-a<<endl;
-    //     cout << (a < b) << "\n";
-    //     cout << (a > b) << "\n";
-    //     cout << a.Sign() << "\n";
-    //     cout << b.size() << "\n";
-    //     cout << a << "\n";
-    //     cout << b << "\n";
-    // }
+    while(cin>>s1>>s2){
+        BigDecimalInt a(s1),b(s2);
+        cout<<a+b<<endl;
+        cout<<a-b<<endl;
+        cout<<b-a<<endl;
+        cout << (a < b) << "\n";
+        cout << (a > b) << "\n";
+        cout << a.Sign() << "\n";
+        cout << b.size() << "\n";
+        cout << a << "\n";
+        cout << b << "\n";
+    }
 }

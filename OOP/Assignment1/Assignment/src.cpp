@@ -209,7 +209,7 @@ BigDecimalInt BigDecimalInt::subtract(BigDecimalInt num2, BigDecimalInt num1){
     s=getNumWithAddedZeros(num2.size(),num1.size())+num1.decStr;
     l=num2.decStr;
     if((int)l[0]-48 < (int)s[0]-48){
-        if(num1.sign=='-'&&num2.sign=='+'){
+        if((num1.sign=='-'&&num2.sign=='+')||(num2.sign=='+'&&num1.sign=='+')){
             res+='-';
             string t;
             t=l;
