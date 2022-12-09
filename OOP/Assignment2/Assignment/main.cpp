@@ -5,7 +5,7 @@ int main(){
     // BigReal n7 = n5 - n6; 
     // cout << n7; 
 
-    BigReal num2("5.78") , num1("-224.56");
+    BigReal num2("5.00") , num1("6.0");
     /* (num1 > num2):  num1 = 9450.226 , num2 = 2448.6777.
     *  +ve + +ve: num1 + num2 = 9898.9037.
     *  +ve + -ve: num1 + -num2 = 9001.5483.
@@ -27,8 +27,7 @@ int main(){
     //     *  -ve - -ve: -num1 - -num2 = 7001.5483.
     // * -------------------------------------------
     // */
-    cout<<num2 - num1<<endl;
-
+    if(num1>num2)
     // string n1 = "-34", n2 = "100", n3 = "-500", n4 = "7";
 
     // BigDecimalInt input(n1), input3(n2);

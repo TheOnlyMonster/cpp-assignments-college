@@ -13,7 +13,7 @@ class BigDecimalInt{
         string decStrValue;
         string decStr;
         char Sign();
-        int size();
+        virtual int size();
         BigDecimalInt(int decInt);
         BigDecimalInt(string decStr);
         bool operator<(BigDecimalInt anotherDec);
@@ -44,10 +44,10 @@ class BigReal:public BigDecimalInt{
         BigReal operator+(BigReal& other); 
         BigReal operator-(BigReal& other); 
         // bool operator<(BigReal anotherReal);                
-        // bool operator>(BigReal anotherReal);                
+        bool operator>(BigReal anotherReal);                
         // bool operator==(BigReal anotherReal);                
-        // int size(); 
-        // friend ostream& operator<<(ostream& out, BigReal num); 
-        friend istream& operator>>(istream& out, BigReal num); 
+        int size(); //overidden
+        // friend ostream& operator<<(ostream& out, BigReal num); //why do we need this? 
+        friend istream& operator>>(istream& out, BigReal& num); 
 };
 #endif

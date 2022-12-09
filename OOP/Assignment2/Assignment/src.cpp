@@ -450,7 +450,24 @@ BigReal BigReal::operator-(BigReal& other){
 BigReal::BigReal(BigDecimalInt bigInteger):BigReal(bigInteger.decStr){
 
 }
-istream& operator>>(istream& out, BigReal num){
-    BigReal temp(num);
+istream& operator>>(istream& out, BigReal& num){
+    string s;
+    out>>s;
+    num = BigReal(s);
     return out;
+}
+int BigReal::size(){
+    return this->numA.length()+this->numB.length();
+}
+bool BigReal::operator>(BigReal anotherReal){
+    if(BigDecimalInt(this->numB).operator>(BigDecimalInt(anotherReal.numB))){
+        return true;
+    }
+    else if(BigDecimalInt(this->numB).operator==(BigDecimalInt(anotherReal.numB))){
+        if(BigDecimalInt(this->numA).operator>(BigDecimalInt(anotherReal.numA))){
+            return true;
+        }
+        return false;
+    }
+    return false;
 }
