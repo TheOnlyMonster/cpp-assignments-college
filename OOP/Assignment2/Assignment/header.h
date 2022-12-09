@@ -43,9 +43,9 @@ class BigReal:public BigDecimalInt{
         // BigReal& operator=(BigReal&& other); // Move assignment 
         BigReal operator+(BigReal& other); 
         BigReal operator-(BigReal& other); 
-        // bool operator<(BigReal anotherReal);                
+        bool operator<(BigReal anotherReal);                
         bool operator>(BigReal anotherReal);                
-        // bool operator==(BigReal anotherReal);                
+        bool operator==(BigReal anotherReal);                
         int size(); //overidden
         // friend ostream& operator<<(ostream& out, BigReal num); //why do we need this? 
         friend istream& operator>>(istream& out, BigReal& num); 

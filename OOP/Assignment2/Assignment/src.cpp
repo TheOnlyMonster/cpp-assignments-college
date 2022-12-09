@@ -386,11 +386,10 @@ BigReal BigReal::operator+(BigReal& other){
     if(biggerFraction<other.fractionIndex){
         biggerFraction=other.fractionIndex;
     }
-    if(this->numA.length()!=other.numA.length()){
-        getNumAWithAddedZeros(other);
-    }
+    getNumAWithAddedZeros(other);
     bool equal=false;
     if((this->sign=='+'&&other.sign=='+')||(this->sign=='-'&&other.sign=='-')){
+        cout<<this->sign<<" "<<other.sign<<endl;
         if((BigDecimalInt)sum(BigDecimalInt(this->numA),BigDecimalInt(other.numA)).size() > this->numA.length()){
             res=sum(BigDecimalInt(this->sign+this->numB+this->numA),BigDecimalInt(other.sign+other.numB+other.numA)).decStrValue;
         }
@@ -444,7 +443,12 @@ BigReal BigReal::operator-(BigReal& other){
         other.sign='-';
         return operator+(other);
     }
-    other.sign='-';
+    else if(*this==other){
+        return BigReal("0.0");
+    }
+    else{
+        other.sign='-';
+    }
     return operator+(other);
 }
 BigReal::BigReal(BigDecimalInt bigInteger):BigReal(bigInteger.decStr){
@@ -460,14 +464,36 @@ int BigReal::size(){
     return this->numA.length()+this->numB.length();
 }
 bool BigReal::operator>(BigReal anotherReal){
-    if(BigDecimalInt(this->numB).operator>(BigDecimalInt(anotherReal.numB))){
+    getNumAWithAddedZeros(anotherReal);
+    if(BigDecimalInt(this->sign+this->numB).operator>(BigDecimalInt(anotherReal.sign+anotherReal.numB))){
         return true;
     }
-    else if(BigDecimalInt(this->numB).operator==(BigDecimalInt(anotherReal.numB))){
+    else if(BigDecimalInt(this->sign+this->numB).operator==(BigDecimalInt(anotherReal.sign+anotherReal.numB))){
         if(BigDecimalInt(this->numA).operator>(BigDecimalInt(anotherReal.numA))){
             return true;
         }
         return false;
+    }
+    return false;
+}
+bool BigReal::operator<(BigReal anotherReal){
+    getNumAWithAddedZeros(anotherReal);
+    if(BigDecimalInt(this->sign+this->numB).operator<(BigDecimalInt(anotherReal.sign+anotherReal.numB))){
+        return true;
+    }
+    else if(BigDecimalInt(this->sign+this->numB).operator==(BigDecimalInt(anotherReal.sign+anotherReal.numB))){
+        if(BigDecimalInt(this->numA).operator<(BigDecimalInt(anotherReal.numA))){
+            return true;
+        }
+        return false;
+    }
+    return false;
+}
+bool BigReal::operator==(BigReal anotherReal){
+    getNumAWithAddedZeros(anotherReal);
+    if( (BigDecimalInt(this->sign+this->numB).operator==(BigDecimalInt(anotherReal.sign+anotherReal.numB))) && 
+    (BigDecimalInt(this->numA).operator==(BigDecimalInt(anotherReal.numA))) ){
+        return true;
     }
     return false;
 }

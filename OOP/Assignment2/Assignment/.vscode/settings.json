@@ -12,6 +12,7 @@
     "ostream": "cpp",
     "*.tcc": "cpp",
     "iosfwd": "cpp",
-    "ratio": "cpp"
+    "ratio": "cpp",
+    "scoped_allocator": "cpp"
   }
 }
