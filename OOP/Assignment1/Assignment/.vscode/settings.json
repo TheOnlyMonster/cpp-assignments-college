@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "bitset": "cpp",
+    "chrono": "cpp",
+    "complex": "cpp",
+    "limits": "cpp",
+    "memory": "cpp",
+    "sstream": "cpp",
+    "valarray": "cpp",
+    "iostream": "cpp",
+    "random": "cpp"
+  }
+}

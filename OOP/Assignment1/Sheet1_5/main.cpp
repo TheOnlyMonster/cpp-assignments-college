@@ -8,7 +8,6 @@ void FormsDominoChain(vector<dominoT> dominoS);
 bool BoolFormsDominoChain(vector<dominoT> dominoS);
 int main(){
     vector<dominoT> dominoSet = {{1,4},{2,6},{4,4},{6,1},{4,3}};
-    // 4-5 5-2 2-4 4-6 6-3
     FormsDominoChain(dominoSet);
     if(BoolFormsDominoChain(dominoSet)){
         cout<<"true";
